@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import App from "./App.tsx";
 import CustomerList from "./components/CustomerList.tsx";
 import TrainingList from "./components/TrainingList.tsx";
@@ -10,8 +10,11 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
-      { index: true, element: <CustomerList /> },
+      { index: true, element: <Navigate to="/customers" replace /> },
+      { path: "customers", element: <CustomerList /> },
       { path: "trainings", element: <TrainingList /> },
+      // Unknown addresses go back to the customer list
+      { path: "*", element: <Navigate to="/customers" replace /> },
     ],
   },
 ]);

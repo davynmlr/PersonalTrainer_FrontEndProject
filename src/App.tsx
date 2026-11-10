@@ -14,7 +14,7 @@ function App() {
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Personal Trainer
           </Typography>
-          <Button color="inherit" component={Link} to="/">
+          <Button color="inherit" component={Link} to="/customers">
             Customers
           </Button>
           <Button color="inherit" component={Link} to="/trainings">
