@@ -1,75 +1,70 @@
-# React + TypeScript + Vite
+# Personal Trainer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React front end for a personal trainer company's customer database: customers and their trainings, using the course's existing REST API.
 
-Currently, two official plugins are available:
+Final project for the Front End Programming course at Haaga-Helia.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech stack
 
-## React Compiler
+- Vite + React + TypeScript (strict)
+- Material UI and MUI icons
+- MUI X DataGrid (sorting, filtering, search, pagination)
+- React Router
+- Day.js for date formatting
+- Plain `fetch` for API calls
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Getting started
 
-## Expanding the ESLint configuration
+Requires Node.js 20 or newer.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Open the URL shown in the terminal (usually http://localhost:5173).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Other scripts:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build    # type-check and build for production
+npm run lint     # run ESLint
+npm run preview  # serve the production build
+```
+
+### API URL
+
+The API base URL is read from `VITE_API_URL` in `.env`:
 
 ```
+VITE_API_URL=https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api
+```
+
+If the variable is missing, the same URL is used as a fallback (`src/api/config.ts`).
+
+API docs: https://juhahinkula.github.io/personaltrainerdocs/
+
+## Project structure
+
+```
+src/
+  api/          fetch calls (customersApi, trainingsApi)
+  types/        TypeScript types (Customer, Training)
+  components/   CustomerList, TrainingList
+  utils/        formatting helpers (dates, names)
+  App.tsx       app bar with navigation
+  main.tsx      routes
+```
+
+## Features
+
+### Part 1: Customer and training lists
+
+- App bar with navigation between **Customers** and **Trainings**
+- Customer list: name, address, postcode, city, email, phone
+- Training list: date, activity, duration and customer name
+- Dates shown as `DD.MM.YYYY HH:mm`
+- Sort by clicking any column header (dates sort chronologically)
+- Search across all columns from the toolbar, plus per-column filters
+- Pagination, column visibility, and CSV export from the table toolbar
+- Loading indicator while data loads, error message in a snackbar
