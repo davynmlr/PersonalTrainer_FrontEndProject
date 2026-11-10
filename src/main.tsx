@@ -9,6 +9,7 @@ import App from "./App.tsx";
 import CustomerList from "./components/CustomerList.tsx";
 import TrainingList from "./components/TrainingList.tsx";
 import TrainingCalendar from "./components/TrainingCalendar.tsx";
+import TrainingStatistics from "./components/TrainingStatistics.tsx";
 
 // en-gb: weeks start on Monday in the calendar and the date picker
 dayjs.locale("en-gb");
@@ -23,6 +24,7 @@ const router = createBrowserRouter(
         { path: "customers", element: <CustomerList /> },
         { path: "trainings", element: <TrainingList /> },
         { path: "calendar", element: <TrainingCalendar /> },
+        { path: "statistics", element: <TrainingStatistics /> },
         // Unknown addresses go back to the customer list
         { path: "*", element: <Navigate to="/customers" replace /> },
       ],

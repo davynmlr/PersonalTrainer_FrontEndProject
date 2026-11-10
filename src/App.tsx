@@ -23,6 +23,9 @@ function App() {
           <Button color="inherit" component={Link} to="/calendar">
             Calendar
           </Button>
+          <Button color="inherit" component={Link} to="/statistics">
+            Statistics
+          </Button>
         </Toolbar>
       </AppBar>
       <Outlet />
