@@ -50,7 +50,7 @@ API docs: https://juhahinkula.github.io/personaltrainerdocs/
 src/
   api/          fetch calls (customersApi, trainingsApi)
   types/        TypeScript types (Customer, Training)
-  components/   CustomerList, TrainingList
+  components/   lists, add/edit dialogs, forms, confirm dialog
   utils/        formatting helpers (dates, names)
   App.tsx       app bar with navigation
   main.tsx      routes
@@ -68,3 +68,13 @@ src/
 - Search across all columns from the toolbar, plus per-column filters
 - Pagination, column visibility, and CSV export from the table toolbar
 - Loading indicator while data loads, error message in a snackbar
+
+### Part 2: Add, edit and delete
+
+- **Add customer**: "Add Customer" button above the list opens a form dialog
+- **Edit customer**: pencil icon on each row opens the same form, filled in
+- **Delete customer**: trash icon asks for Yes/No confirmation first, and warns that the customer's trainings are deleted too
+- **Add training to a customer**: dumbbell icon on a customer row opens a dialog with a date and time picker (MUI X DateTimePicker), activity and duration
+- **Delete training**: trash icon on the training list, with Yes/No confirmation
+- Save is disabled until the required fields are filled in
+- A snackbar confirms each action or shows the error

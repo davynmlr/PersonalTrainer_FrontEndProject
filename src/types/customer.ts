@@ -22,3 +22,13 @@ export type Customer = CustomerData & {
     };
   };
 };
+
+export const emptyCustomer: CustomerData = {
+  firstname: "",
+  lastname: "",
+  streetaddress: "",
+  postcode: "",
+  city: "",
+  email: "",
+  phone: "",
+};

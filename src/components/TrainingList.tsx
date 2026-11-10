@@ -1,17 +1,37 @@
 import { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import type { GridColDef } from "@mui/x-data-grid";
+import type { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import DeleteIcon from "@mui/icons-material/Delete";
 import Snackbar from "@mui/material/Snackbar";
 import type { TrainingWithCustomer } from "../types/training";
-import { getTrainings } from "../api/trainingsApi";
+import { getTrainings, deleteTraining } from "../api/trainingsApi";
 import { formatDateTime, formatFullName } from "../utils/formatters";
+import ConfirmDialog from "./ConfirmDialog";
 
 function TrainingList() {
   const [trainings, setTrainings] = useState<TrainingWithCustomer[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [trainingToDelete, setTrainingToDelete] =
+    useState<TrainingWithCustomer | null>(null);
 
   const columns: GridColDef<TrainingWithCustomer>[] = [
+    {
+      field: "actions",
+      headerName: "",
+      width: 60,
+      sortable: false,
+      filterable: false,
+      renderCell: (params: GridRenderCellParams<TrainingWithCustomer>) => (
+        <Tooltip title="Delete training">
+          <IconButton onClick={() => setTrainingToDelete(params.row)}>
+            <DeleteIcon color="error" />
+          </IconButton>
+        </Tooltip>
+      ),
+    },
     {
       field: "date",
       headerName: "Date",
@@ -34,13 +54,25 @@ function TrainingList() {
   const fetchTrainings = () => {
     getTrainings()
       .then((data) => setTrainings(data))
-      .catch((err) => setError(err.message))
+      .catch((err) => setMessage(err.message))
       .finally(() => setLoading(false));
   };
 
   useEffect(() => {
     fetchTrainings();
   }, []);
+
+  const handleDelete = () => {
+    if (!trainingToDelete) return;
+
+    deleteTraining(trainingToDelete.id)
+      .then(() => {
+        fetchTrainings();
+        setMessage("Training deleted");
+      })
+      .catch((err) => setMessage(err.message));
+    setTrainingToDelete(null);
+  };
 
   return (
     <>
@@ -51,13 +83,27 @@ function TrainingList() {
           loading={loading}
           autoPageSize
           showToolbar
+          disableRowSelectionOnClick
         />
       </div>
+      <ConfirmDialog
+        open={trainingToDelete !== null}
+        title="Delete training?"
+        message={
+          "Are you sure you want to delete " +
+          (trainingToDelete?.activity ?? "") +
+          " on " +
+          formatDateTime(trainingToDelete?.date ?? null) +
+          "?"
+        }
+        onConfirm={handleDelete}
+        onCancel={() => setTrainingToDelete(null)}
+      />
       <Snackbar
-        open={error !== ""}
-        message={error}
-        autoHideDuration={5000}
-        onClose={() => setError("")}
+        open={message !== ""}
+        message={message}
+        autoHideDuration={3000}
+        onClose={() => setMessage("")}
       />
     </>
   );

@@ -11,3 +11,11 @@ export type Training = {
 export type TrainingWithCustomer = Training & {
   customer: (CustomerData & { id: number }) | null;
 };
+
+// Body for POST /trainings
+export type TrainingData = {
+  date: string; // ISO-8601
+  activity: string;
+  duration: number; // minutes
+  customer: string; // the customer's _links.self.href
+};
