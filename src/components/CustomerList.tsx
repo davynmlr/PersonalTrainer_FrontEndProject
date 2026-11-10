@@ -1,9 +1,20 @@
 import { useState, useEffect } from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import type { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  gridSortedRowIdsSelector,
+  useGridApiRef,
+} from "@mui/x-data-grid";
+import type {
+  GridColDef,
+  GridCsvExportOptions,
+  GridRenderCellParams,
+} from "@mui/x-data-grid";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
+import DownloadIcon from "@mui/icons-material/Download";
 import Snackbar from "@mui/material/Snackbar";
 import type { Customer } from "../types/customer";
 import { getCustomers, deleteCustomer } from "../api/customersApi";
@@ -13,7 +24,16 @@ import EditCustomer from "./EditCustomer";
 import AddTraining from "./AddTraining";
 import ConfirmDialog from "./ConfirmDialog";
 
+// CSV export: all customers (also the ones hidden by a search or filter).
+// The button column is left out with disableExport.
+const csvOptions: GridCsvExportOptions = {
+  fileName: "customers",
+  utf8WithBom: true, // so Excel shows ä and ö correctly
+  getRowsToExport: ({ apiRef }) => gridSortedRowIdsSelector(apiRef),
+};
+
 function CustomerList() {
+  const apiRef = useGridApiRef();
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
@@ -28,6 +48,7 @@ function CustomerList() {
       width: 150,
       sortable: false,
       filterable: false,
+      disableExport: true,
       renderCell: (params: GridRenderCellParams<Customer>) => (
         <>
           <EditCustomer
@@ -78,9 +99,26 @@ function CustomerList() {
 
   return (
     <>
-      <AddCustomer fetchCustomers={fetchCustomers} showMessage={setMessage} />
+      <Stack direction="row" spacing={1}>
+        <AddCustomer fetchCustomers={fetchCustomers} showMessage={setMessage} />
+        <Button
+          variant="outlined"
+          startIcon={<DownloadIcon />}
+          onClick={() => apiRef.current?.exportDataAsCsv(csvOptions)}
+          disabled={customers.length === 0}
+        >
+          Export CSV
+        </Button>
+      </Stack>
       <div style={{ width: "100%", height: 600, marginTop: 8 }}>
         <DataGrid
+          apiRef={apiRef}
+          slotProps={{
+            toolbar: {
+              csvOptions: csvOptions,
+              printOptions: { disableToolbarButton: true },
+            },
+          }}
           rows={customers}
           columns={columns}
           getRowId={(row) => row._links.self.href}

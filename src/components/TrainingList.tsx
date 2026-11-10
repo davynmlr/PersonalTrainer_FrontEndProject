@@ -24,6 +24,7 @@ function TrainingList() {
       width: 60,
       sortable: false,
       filterable: false,
+      disableExport: true,
       renderCell: (params: GridRenderCellParams<TrainingWithCustomer>) => (
         <Tooltip title="Delete training">
           <IconButton onClick={() => setTrainingToDelete(params.row)}>
