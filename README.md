@@ -90,3 +90,15 @@ src/
 - **Delete training**: trash icon on the training list, with Yes/No confirmation
 - Save is disabled until the required fields are filled in
 - A snackbar confirms each action or shows the error
+
+### Part 3: Export, calendar and deployment
+
+- **Export CSV**: button above the customer list downloads `customers.csv` with all customers, even when a search or filter is active. The button column is left out of the file. The table toolbar's export uses the same settings.
+- **Calendar page**: all trainings in a calendar (React Big Calendar) with month, week, day and agenda views. Each event shows "Activity / Customer name" and lasts as long as the training's duration. Weeks start on Monday, times are 24-hour.
+- **Deployment**: GitHub Pages, see [Deployment](#deployment)
+
+### Part 4: Statistics
+
+- **Statistics page**: bar chart (Recharts) of the total training minutes per activity, largest first
+- Totals are calculated with lodash: `groupBy` groups the trainings by activity and `sumBy` adds up their durations (`src/utils/statistics.ts`)
+- Each bar shows its total on top, and hovering a bar shows a tooltip
