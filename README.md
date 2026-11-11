@@ -114,7 +114,7 @@ The app has automated tests written with [Vitest](https://vitest.dev/) and [Reac
 | Test file | What it checks |
 | --- | --- |
 | `utils/formatters.test.ts` | Dates are shown as `DD.MM.YYYY HH:mm`, full names are joined correctly, missing values give an empty string |
-| `utils/statistics.test.ts` | Minutes are added up per activity and sorted biggest first |
+| `utils/statistics.test.ts` | Minutes per activity and per customer, total hours and the most popular activity are calculated correctly |
 | `components/ConfirmDialog.test.tsx` | The dialog shows its text, "Yes" confirms and "No" cancels |
 | `components/AddCustomer.test.tsx` | The form opens, and Save stays disabled until first and last name are filled in |
 | `utils/activityColors.test.ts` | Every activity gets its own color, the same activity always gets the same color |
@@ -135,3 +135,10 @@ Run them with `npm test`.
 - **Reset data** button in the app bar puts back the original demo customers and trainings (`POST /reset`). Useful because the course API is shared and its data gets messy.
 - A Yes/No dialog asks first and warns that the reset also affects other users of the API.
 - After the reset, the page that is open loads its data again, and a message confirms the reset.
+
+### Better statistics page
+
+- **Summary cards** at the top: number of customers, number of trainings, total hours of training and the most popular activity (the one with the most trainings).
+- **Minutes by customer**: a second bar chart (horizontal bars) showing how many minutes each customer has trained, biggest first.
+- The bars of the "Minutes by activity" chart use the same color for each activity as the calendar.
+- The calculations are in `src/utils/statistics.ts` and use lodash (`groupBy`, `sumBy`, `countBy`).
