@@ -13,6 +13,7 @@ import {
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+import { useTheme } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import PeopleIcon from "@mui/icons-material/People";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
@@ -31,6 +32,18 @@ import {
 import StatCard from "./StatCard";
 
 function TrainingStatistics() {
+  // Recharts does not use the MUI theme by itself, so the chart text, lines
+  // and tooltip get their colors from the theme here (works in dark mode too)
+  const theme = useTheme();
+  const axisText = { fill: theme.palette.text.secondary };
+  const valueText = { fill: theme.palette.text.primary };
+  const gridColor = theme.palette.divider;
+  const tooltipStyle = {
+    backgroundColor: theme.palette.background.paper,
+    borderColor: theme.palette.divider,
+    color: theme.palette.text.primary,
+  };
+
   const [customerCount, setCustomerCount] = useState(0);
   const [trainings, setTrainings] = useState<TrainingWithCustomer[]>([]);
   const [loading, setLoading] = useState(true);
@@ -84,18 +97,28 @@ function TrainingStatistics() {
         <div style={{ width: "100%", height: 400 }}>
           <ResponsiveContainer>
             <BarChart data={minutesByActivity} margin={{ top: 24, right: 16, left: 16 }}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="activity" />
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={gridColor} />
+              <XAxis dataKey="activity" tick={axisText} />
               <YAxis
-                label={{ value: "Duration (min)", angle: -90, position: "insideLeft" }}
+                tick={axisText}
+                label={{
+                  value: "Duration (min)",
+                  angle: -90,
+                  position: "insideLeft",
+                  ...axisText,
+                }}
               />
-              <Tooltip formatter={(value) => [value + " min", "Duration"]} />
+              <Tooltip
+                formatter={(value) => [value + " min", "Duration"]}
+                contentStyle={tooltipStyle}
+                cursor={{ fill: theme.palette.action.hover }}
+              />
               <Bar dataKey="minutes">
                 {/* Same color for each activity as in the calendar */}
                 {minutesByActivity.map((row) => (
                   <Cell key={row.activity} fill={colors[row.activity]} />
                 ))}
-                <LabelList dataKey="minutes" position="top" />
+                <LabelList dataKey="minutes" position="top" {...valueText} />
               </Bar>
             </BarChart>
           </ResponsiveContainer>
@@ -112,12 +135,16 @@ function TrainingStatistics() {
               layout="vertical"
               margin={{ top: 16, right: 48, left: 16 }}
             >
-              <CartesianGrid strokeDasharray="3 3" horizontal={false} />
-              <XAxis type="number" />
-              <YAxis type="category" dataKey="customer" width={150} />
-              <Tooltip formatter={(value) => [value + " min", "Duration"]} />
+              <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke={gridColor} />
+              <XAxis type="number" tick={axisText} />
+              <YAxis type="category" dataKey="customer" width={150} tick={axisText} />
+              <Tooltip
+                formatter={(value) => [value + " min", "Duration"]}
+                contentStyle={tooltipStyle}
+                cursor={{ fill: theme.palette.action.hover }}
+              />
               <Bar dataKey="minutes" fill="#1976d2">
-                <LabelList dataKey="minutes" position="right" />
+                <LabelList dataKey="minutes" position="right" {...valueText} />
               </Bar>
             </BarChart>
           </ResponsiveContainer>

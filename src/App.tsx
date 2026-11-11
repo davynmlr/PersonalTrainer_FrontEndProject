@@ -7,6 +7,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
 import NavLinks from "./components/NavLinks";
+import DarkModeToggle from "./components/DarkModeToggle";
 import ResetDatabase from "./components/ResetDatabase";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
             Personal Trainer
           </Typography>
           <NavLinks />
+          <DarkModeToggle />
           <ResetDatabase
             onReset={() => setResetCount(resetCount + 1)}
             showMessage={setMessage}

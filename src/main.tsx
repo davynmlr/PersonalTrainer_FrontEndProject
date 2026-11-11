@@ -5,6 +5,8 @@ import dayjs from "dayjs";
 import "dayjs/locale/en-gb";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { ThemeProvider } from "@mui/material/styles";
+import { theme } from "./theme";
 import App from "./App.tsx";
 import CustomerList from "./components/CustomerList.tsx";
 import TrainingList from "./components/TrainingList.tsx";
@@ -36,8 +38,10 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
-      <RouterProvider router={router} />
-    </LocalizationProvider>
+    <ThemeProvider theme={theme}>
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
+        <RouterProvider router={router} />
+      </LocalizationProvider>
+    </ThemeProvider>
   </StrictMode>,
 );

@@ -119,6 +119,7 @@ The app has automated tests written with [Vitest](https://vitest.dev/) and [Reac
 | `components/AddCustomer.test.tsx` | The form opens, and Save stays disabled until first and last name are filled in |
 | `utils/activityColors.test.ts` | Every activity gets its own color, the same activity always gets the same color |
 | `utils/trainingForm.test.ts` | The training form is only valid when it is filled in, and it is turned into the right body for the API |
+| `components/DarkModeToggle.test.tsx` | The button switches between light and dark mode, and the choice is saved for the next visit |
 | `components/NavLinks.test.tsx` | The link of the open page is marked as active, and the phone menu lists all pages |
 | `components/ResetDatabase.test.tsx` | "No" sends nothing, "Yes" sends `POST /reset`, and an error is shown if the reset fails (uses a fake `fetch`, so the real API is not reset) |
 
@@ -150,3 +151,10 @@ Run them with `npm test`.
 - **Phone menu**: on screens narrower than 900px the page links are replaced by a ☰ menu button that opens a list of the pages. The open page is highlighted there too.
 - On phones the **Reset data** button shows only its icon to save space (screen readers still read "Reset data").
 - The list of pages is in one place (`src/components/NavLinks.tsx`), so a new page only has to be added once.
+
+### Dark mode
+
+- A **moon / sun button** in the app bar switches between light and dark mode.
+- The first time, the app uses the computer's own setting. After that it remembers the user's choice (saved in the browser).
+- Built with the MUI theme (`src/theme.ts`): the theme has a light and a dark color scheme, and the button changes between them with MUI's `useColorScheme()` hook. All MUI components (tables, dialogs, date pickers, cards) change color automatically.
+- React Big Calendar and Recharts do not use the MUI theme by themselves, so they get their colors from the theme: the calendar through a few CSS rules (`TrainingCalendar.tsx`), the charts through `useTheme()` (`TrainingStatistics.tsx`).

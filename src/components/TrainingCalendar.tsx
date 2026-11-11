@@ -6,6 +6,7 @@ import type { Formats, SlotInfo, View } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import Chip from "@mui/material/Chip";
 import Snackbar from "@mui/material/Snackbar";
+import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import type { TrainingWithCustomer } from "../types/training";
@@ -27,6 +28,26 @@ const formats: Formats = {
   agendaTimeRangeFormat: timeRange,
   dayHeaderFormat: "dddd DD.MM.YYYY",
   agendaDateFormat: "ddd DD.MM.YYYY",
+};
+
+// React Big Calendar has its own light-only CSS. These rules replace its
+// colors with the MUI theme colors, so the calendar works in dark mode too.
+// ("divider", "text.primary", ... change automatically with light/dark mode.)
+const calendarColors = {
+  color: "text.primary",
+  // all lines between the days and hours
+  "& .rbc-calendar *": { borderColor: "divider" },
+  // days of the previous / next month in the month view
+  "& .rbc-off-range-bg": { bgcolor: "action.hover" },
+  "& .rbc-off-range": { color: "text.disabled" },
+  // today
+  "& .rbc-today": { bgcolor: "action.selected" },
+  // Today / Back / Next and Month / Week / Day / Agenda buttons
+  "& .rbc-toolbar button": { color: "text.primary" },
+  "& .rbc-toolbar button:hover, & .rbc-toolbar button:focus": {
+    bgcolor: "action.hover",
+  },
+  "& .rbc-toolbar button.rbc-active": { bgcolor: "action.selected" },
 };
 
 // One training shown in the calendar
@@ -116,7 +137,7 @@ function TrainingCalendar() {
         ))}
       </Stack>
 
-      <div style={{ height: 650 }}>
+      <Box sx={{ height: 650, ...calendarColors }}>
         <Calendar
           localizer={localizer}
           events={events}
@@ -134,7 +155,7 @@ function TrainingCalendar() {
             style: { backgroundColor: colors[event.training.activity], border: "none" },
           })}
         />
-      </div>
+      </Box>
 
       {newTrainingStart && (
         <AddTrainingDialog
