@@ -1,5 +1,5 @@
 import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 
 // https://vite.dev/config/
 export default defineConfig(({ command, isPreview }) => ({
@@ -8,4 +8,9 @@ export default defineConfig(({ command, isPreview }) => ({
   base:
     command === "build" || isPreview ? "/PersonalTrainer_FrontEndProject/" : "/",
   plugins: [react()],
+  // Vitest: run the tests in a fake browser (jsdom)
+  test: {
+    environment: "jsdom",
+    setupFiles: "./src/setupTests.ts",
+  },
 }));

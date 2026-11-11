@@ -17,6 +17,7 @@ Final project for the Front End Programming course at Haaga-Helia.
 - React Router
 - Day.js for date formatting
 - Plain `fetch` for API calls
+- Vitest and React Testing Library for tests
 
 ## Getting started
 
@@ -35,6 +36,7 @@ Other scripts:
 npm run build    # type-check and build for production
 npm run lint     # run ESLint
 npm run preview  # serve the production build
+npm test         # run the tests (press q to quit)
 ```
 
 ### API URL
@@ -102,3 +104,18 @@ src/
 - **Statistics page**: bar chart (Recharts) of the total training minutes per activity, largest first
 - Totals are calculated with lodash: `groupBy` groups the trainings by activity and `sumBy` adds up their durations (`src/utils/statistics.ts`)
 - Each bar shows its total on top, and hovering a bar shows a tooltip
+
+## Extra features
+
+### Tests (Vitest + React Testing Library)
+
+The app has automated tests written with [Vitest](https://vitest.dev/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/). Each test file sits next to the file it tests (`*.test.ts` / `*.test.tsx`).
+
+| Test file | What it checks |
+| --- | --- |
+| `utils/formatters.test.ts` | Dates are shown as `DD.MM.YYYY HH:mm`, full names are joined correctly, missing values give an empty string |
+| `utils/statistics.test.ts` | Minutes are added up per activity and sorted biggest first |
+| `components/ConfirmDialog.test.tsx` | The dialog shows its text, "Yes" confirms and "No" cancels |
+| `components/AddCustomer.test.tsx` | The form opens, and Save stays disabled until first and last name are filled in |
+
+Run them with `npm test`.
