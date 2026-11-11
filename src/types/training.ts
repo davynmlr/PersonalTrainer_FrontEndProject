@@ -1,3 +1,4 @@
+import type { Dayjs } from "dayjs";
 import type { CustomerData } from "./customer";
 
 export type Training = {
@@ -18,4 +19,11 @@ export type TrainingData = {
   activity: string;
   duration: number; // minutes
   customer: string; // the customer's _links.self.href
+};
+
+// Values of the training form while the user is typing
+export type TrainingFormData = {
+  date: Dayjs | null;
+  activity: string;
+  duration: string; // text from the input, converted to a number on save
 };

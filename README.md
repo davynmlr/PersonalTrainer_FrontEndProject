@@ -117,5 +117,14 @@ The app has automated tests written with [Vitest](https://vitest.dev/) and [Reac
 | `utils/statistics.test.ts` | Minutes are added up per activity and sorted biggest first |
 | `components/ConfirmDialog.test.tsx` | The dialog shows its text, "Yes" confirms and "No" cancels |
 | `components/AddCustomer.test.tsx` | The form opens, and Save stays disabled until first and last name are filled in |
+| `utils/activityColors.test.ts` | Every activity gets its own color, the same activity always gets the same color |
+| `utils/trainingForm.test.ts` | The training form is only valid when it is filled in, and it is turned into the right body for the API |
 
 Run them with `npm test`.
+
+### Calendar improvements
+
+- **Add a training from the calendar**: click an empty time slot (or a day in the month view) to open the "New Training" dialog. The date and time are already filled in (09:00 in the month view), and the customer is picked from a list.
+- **Training details**: click a training to see the customer, the time and the duration. The dialog has a **Delete** button with a Yes/No confirmation.
+- **Colors per activity**: every activity has its own color, and a legend above the calendar shows which color belongs to which activity (`src/utils/activityColors.ts`).
+- The date, activity and duration fields are shared by both "New Training" dialogs (`TrainingForm`, like `CustomerForm`).
