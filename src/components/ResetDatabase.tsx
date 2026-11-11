@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { resetDatabase } from "../api/databaseApi";
@@ -31,11 +32,17 @@ export default function ResetDatabase(props: ResetDatabaseProps) {
     <>
       <Button
         color="inherit"
-        startIcon={<RestartAltIcon />}
+        aria-label="Reset data"
+        title="Reset data"
         onClick={() => setConfirmOpen(true)}
         disabled={resetting}
+        sx={{ minWidth: 0, gap: 1 }}
       >
-        {resetting ? "Resetting..." : "Reset data"}
+        <RestartAltIcon />
+        {/* On phones (xs) only the icon is shown, to save space */}
+        <Box component="span" sx={{ display: { xs: "none", sm: "inline" } }}>
+          {resetting ? "Resetting..." : "Reset data"}
+        </Box>
       </Button>
       <ConfirmDialog
         open={confirmOpen}

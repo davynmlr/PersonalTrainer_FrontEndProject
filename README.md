@@ -119,6 +119,7 @@ The app has automated tests written with [Vitest](https://vitest.dev/) and [Reac
 | `components/AddCustomer.test.tsx` | The form opens, and Save stays disabled until first and last name are filled in |
 | `utils/activityColors.test.ts` | Every activity gets its own color, the same activity always gets the same color |
 | `utils/trainingForm.test.ts` | The training form is only valid when it is filled in, and it is turned into the right body for the API |
+| `components/NavLinks.test.tsx` | The link of the open page is marked as active, and the phone menu lists all pages |
 | `components/ResetDatabase.test.tsx` | "No" sends nothing, "Yes" sends `POST /reset`, and an error is shown if the reset fails (uses a fake `fetch`, so the real API is not reset) |
 
 Run them with `npm test`.
@@ -142,3 +143,10 @@ Run them with `npm test`.
 - **Minutes by customer**: a second bar chart (horizontal bars) showing how many minutes each customer has trained, biggest first.
 - The bars of the "Minutes by activity" chart use the same color for each activity as the calendar.
 - The calculations are in `src/utils/statistics.ts` and use lodash (`groupBy`, `sumBy`, `countBy`).
+
+### Navigation for every screen size
+
+- **Active page highlighted**: the app bar link of the open page has a lighter background and bold text. React Router's `NavLink` marks it with the class `active` (and `aria-current="page"` for screen readers).
+- **Phone menu**: on screens narrower than 900px the page links are replaced by a ☰ menu button that opens a list of the pages. The open page is highlighted there too.
+- On phones the **Reset data** button shows only its icon to save space (screen readers still read "Reset data").
+- The list of pages is in one place (`src/components/NavLinks.tsx`), so a new page only has to be added once.
