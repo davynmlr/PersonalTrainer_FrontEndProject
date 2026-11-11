@@ -119,6 +119,7 @@ The app has automated tests written with [Vitest](https://vitest.dev/) and [Reac
 | `components/AddCustomer.test.tsx` | The form opens, and Save stays disabled until first and last name are filled in |
 | `utils/activityColors.test.ts` | Every activity gets its own color, the same activity always gets the same color |
 | `utils/trainingForm.test.ts` | The training form is only valid when it is filled in, and it is turned into the right body for the API |
+| `components/ResetDatabase.test.tsx` | "No" sends nothing, "Yes" sends `POST /reset`, and an error is shown if the reset fails (uses a fake `fetch`, so the real API is not reset) |
 
 Run them with `npm test`.
 
@@ -128,3 +129,9 @@ Run them with `npm test`.
 - **Training details**: click a training to see the customer, the time and the duration. The dialog has a **Delete** button with a Yes/No confirmation.
 - **Colors per activity**: every activity has its own color, and a legend above the calendar shows which color belongs to which activity (`src/utils/activityColors.ts`).
 - The date, activity and duration fields are shared by both "New Training" dialogs (`TrainingForm`, like `CustomerForm`).
+
+### Reset database
+
+- **Reset data** button in the app bar puts back the original demo customers and trainings (`POST /reset`). Useful because the course API is shared and its data gets messy.
+- A Yes/No dialog asks first and warns that the reset also affects other users of the API.
+- After the reset, the page that is open loads its data again, and a message confirms the reset.
