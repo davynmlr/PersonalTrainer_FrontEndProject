@@ -20,7 +20,6 @@ describe("ConfirmDialog", () => {
   });
 
   test("calls onConfirm when Yes is clicked", async () => {
-    // vi.fn() is a fake function that remembers if it was called
     const onConfirm = vi.fn();
     const onCancel = vi.fn();
     render(

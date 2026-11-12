@@ -31,8 +31,7 @@ const formats: Formats = {
 };
 
 // React Big Calendar has its own light-only CSS. These rules replace its
-// colors with the MUI theme colors, so the calendar works in dark mode too.
-// ("divider", "text.primary", ... change automatically with light/dark mode.)
+// colors with the MUI theme colors, so the calendar works in dark mode too
 const calendarColors = {
   color: "text.primary",
   // all lines between the days and hours
@@ -50,7 +49,6 @@ const calendarColors = {
   "& .rbc-toolbar button.rbc-active": { bgcolor: "action.selected" },
 };
 
-// One training shown in the calendar
 type TrainingEvent = {
   title: string;
   start: Date;
@@ -75,12 +73,9 @@ function toEvent(training: TrainingWithCustomer): TrainingEvent {
 function TrainingCalendar() {
   const [trainings, setTrainings] = useState<TrainingWithCustomer[]>([]);
   const [message, setMessage] = useState("");
-  // Shown view (month/week/day/agenda) and date, changed by the calendar toolbar
   const [view, setView] = useState<View>("month");
   const [date, setDate] = useState(new Date());
-  // Clicked empty time (opens the "new training" dialog)
   const [newTrainingStart, setNewTrainingStart] = useState<Dayjs | null>(null);
-  // Clicked training (opens the details dialog)
   const [selectedTraining, setSelectedTraining] =
     useState<TrainingWithCustomer | null>(null);
 
@@ -95,7 +90,9 @@ function TrainingCalendar() {
   }, []);
 
   const events = trainings.map(toEvent);
-  const colors = getActivityColors(trainings.map((training) => training.activity));
+  const colors = getActivityColors(
+    trainings.map((training) => training.activity),
+  );
 
   const handleSelectSlot = (slot: SlotInfo) => {
     let start = dayjs(slot.start);
@@ -125,7 +122,6 @@ function TrainingCalendar() {
         details or delete it.
       </Typography>
 
-      {/* Color legend: one chip per activity */}
       <Stack direction="row" sx={{ flexWrap: "wrap", gap: 1, mb: 1 }}>
         {Object.entries(colors).map(([activity, color]) => (
           <Chip
@@ -152,7 +148,10 @@ function TrainingCalendar() {
           onSelectSlot={handleSelectSlot}
           onSelectEvent={(event) => setSelectedTraining(event.training)}
           eventPropGetter={(event) => ({
-            style: { backgroundColor: colors[event.training.activity], border: "none" },
+            style: {
+              backgroundColor: colors[event.training.activity],
+              border: "none",
+            },
           })}
         />
       </Box>

@@ -32,7 +32,6 @@ const activeMenuItemStyle = {
 };
 
 function NavLinks() {
-  // The menu button the phone menu is attached to (null = menu closed)
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
 
   return (

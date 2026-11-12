@@ -10,7 +10,6 @@ type StatCardProps = {
   icon: ReactNode;
 };
 
-// One summary card on the statistics page, e.g. "Customers 17"
 function StatCard({ label, value, icon }: StatCardProps) {
   return (
     <Card variant="outlined">

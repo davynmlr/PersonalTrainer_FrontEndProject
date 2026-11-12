@@ -49,7 +49,6 @@ function TrainingStatistics() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Load customers and trainings at the same time
   useEffect(() => {
     Promise.all([getCustomers(), getTrainings()])
       .then(([customers, trainingData]) => {
@@ -60,7 +59,6 @@ function TrainingStatistics() {
       .finally(() => setLoading(false));
   }, []);
 
-  // Everything below is calculated from the loaded data
   const minutesByActivity = getMinutesByActivity(trainings);
   const minutesByCustomer = getMinutesByCustomer(trainings);
   const colors = getActivityColors(trainings.map((training) => training.activity));
@@ -69,7 +67,6 @@ function TrainingStatistics() {
 
   return (
     <>
-      {/* Summary cards: as many per row as fit on the screen */}
       <Box
         sx={{
           display: "grid",

@@ -4,7 +4,6 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import NavLinks from "./NavLinks";
 
-// MemoryRouter: a router for tests, which starts on the page we give it
 function renderOnPage(path: string) {
   render(
     <MemoryRouter initialEntries={[path]}>

@@ -11,7 +11,6 @@ import DarkModeToggle from "./components/DarkModeToggle";
 import ResetDatabase from "./components/ResetDatabase";
 
 function App() {
-  // Goes up by one after every database reset (see the Outlet below)
   const [resetCount, setResetCount] = useState(0);
   const [message, setMessage] = useState("");
 

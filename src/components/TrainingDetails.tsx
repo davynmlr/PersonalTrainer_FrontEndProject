@@ -15,10 +15,9 @@ type TrainingDetailsProps = {
   training: TrainingWithCustomer;
   color: string;
   onClose: () => void;
-  onDelete: () => void; // called after the user confirms with Yes
+  onDelete: () => void;
 };
 
-// Shown when the user clicks a training in the calendar
 export default function TrainingDetails(props: TrainingDetailsProps) {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const training = props.training;

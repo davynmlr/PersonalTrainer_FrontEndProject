@@ -4,7 +4,6 @@ import userEvent from "@testing-library/user-event";
 import ResetDatabase from "./ResetDatabase";
 import { RESET_URL } from "../api/databaseApi";
 
-// Put the real fetch back after each test
 afterEach(() => {
   vi.restoreAllMocks();
 });
@@ -35,7 +34,6 @@ describe("ResetDatabase", () => {
     await userEvent.click(screen.getByRole("button", { name: "Yes" }));
 
     expect(fakeFetch).toHaveBeenCalledWith(RESET_URL, { method: "POST" });
-    // waitFor: the answer from fetch arrives a moment later
     await waitFor(() => expect(onReset).toHaveBeenCalled());
     expect(showMessage).toHaveBeenCalledWith("Database reset to the demo data");
   });

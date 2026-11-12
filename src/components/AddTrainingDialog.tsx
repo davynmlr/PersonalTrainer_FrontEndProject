@@ -36,7 +36,6 @@ export default function AddTrainingDialog(props: AddTrainingDialogProps) {
     newTrainingForm(props.start),
   );
 
-  // Load the customers for the drop-down list
   useEffect(() => {
     getCustomers()
       .then((data) =>

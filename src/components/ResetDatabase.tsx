@@ -6,11 +6,10 @@ import { resetDatabase } from "../api/databaseApi";
 import ConfirmDialog from "./ConfirmDialog";
 
 type ResetDatabaseProps = {
-  onReset: () => void; // called after a successful reset
+  onReset: () => void;
   showMessage: (message: string) => void;
 };
 
-// "Reset data" button in the app bar
 export default function ResetDatabase(props: ResetDatabaseProps) {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [resetting, setResetting] = useState(false);

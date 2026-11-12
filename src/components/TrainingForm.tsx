@@ -8,7 +8,6 @@ type TrainingFormProps = {
   setTraining: React.Dispatch<React.SetStateAction<TrainingFormData>>;
 };
 
-// Date, activity and duration fields, used in every "new training" dialog
 function TrainingForm({ training, setTraining }: TrainingFormProps) {
   return (
     <>

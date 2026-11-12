@@ -4,13 +4,9 @@ import { useColorScheme } from "@mui/material/styles";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 
-// Moon/sun button in the app bar that switches between light and dark mode
 function DarkModeToggle() {
-  // mode: "light", "dark" or "system" (= follow the computer's setting)
-  // systemMode: what the computer's setting is ("light" or "dark")
   const { mode, systemMode, setMode } = useColorScheme();
 
-  // The mode that is really shown right now
   const currentMode = mode === "system" ? systemMode : mode;
 
   // On the very first render MUI does not know the mode yet

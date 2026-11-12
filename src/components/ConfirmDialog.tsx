@@ -13,7 +13,6 @@ type ConfirmDialogProps = {
   onCancel: () => void;
 };
 
-// Yes/No dialog used before deleting something
 function ConfirmDialog(props: ConfirmDialogProps) {
   return (
     <Dialog open={props.open} onClose={props.onCancel}>

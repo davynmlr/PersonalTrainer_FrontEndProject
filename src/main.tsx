@@ -27,7 +27,6 @@ const router = createBrowserRouter(
         { path: "trainings", element: <TrainingList /> },
         { path: "calendar", element: <TrainingCalendar /> },
         { path: "statistics", element: <TrainingStatistics /> },
-        // Unknown addresses go back to the customer list
         { path: "*", element: <Navigate to="/customers" replace /> },
       ],
     },

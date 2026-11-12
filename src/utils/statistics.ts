@@ -49,7 +49,6 @@ export function getTotalHours(trainings: Training[]): number {
 
 // The activity with the most trainings, or "-" when there are no trainings
 export function getMostPopularActivity(trainings: Training[]): string {
-  // countBy gives an object like { Gym: 3, Yoga: 1 }
   const counts = countBy(trainings, (training) => training.activity);
   const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
 
